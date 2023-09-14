@@ -9,16 +9,12 @@ namespace Fundamentals
 {
     public class Fundies
     {
-
-
-        public Dictionary<int, Info> games = new Dictionary<int, Info>();
+       
         public GameInfo game = new GameInfo();
 
 
         public Fundies()
         {
-
-           
 
             Console.WriteLine($"There are {game.MetaData.Count} games.");
             Console.WriteLine($"The most common game genre is {GenreFreq}!");
@@ -26,10 +22,9 @@ namespace Fundamentals
             DisplayInfo();
             FindZs();
 
-
-
         }
 
+        //kind of struggling with a decent way to do this
         public string GenreFreq()
         {
             Dictionary<string, int> genreCount = new Dictionary<string, int>();
@@ -49,16 +44,21 @@ namespace Fundamentals
 
         public void mapCharCount()
         {
+            //created dictionary, variable for highest length
          Dictionary<string, string> longestNames = new Dictionary<string, string>();
          int highestNameLength = 0;
 
            foreach(var info in game.MetaData) 
             {
+                //for each of the map names
               foreach(string mapName in info.MapNames)
                 {
+                    //replace any spaces with null text
                     string noSpaceName = mapName.Replace(" ", "");
+                    //store non-spaced number
                     int nameLength = noSpaceName.Length;
 
+                    //if the name of the map is higher than the current highest, replace it.
                     if(nameLength > highestNameLength)
                     {
                         highestNameLength = nameLength;
@@ -66,6 +66,7 @@ namespace Fundamentals
                         longestNames[mapName] = info.Name;
                     }
 
+                    //if the name of the map is the same as the highest, then add it to the dictionary
                     else if (nameLength == highestNameLength)
                     {
                         longestNames[mapName] = info.Name;
@@ -83,12 +84,15 @@ namespace Fundamentals
 
         public void DisplayInfo()
         {
+      
             Dictionary<int, string> infoDict = new Dictionary<int, string>();
+            //adding each game to the dictionary
             foreach(var info in game.MetaData)
             {
                 infoDict[info.Id] = info.Name;
             }
 
+            //need to fix the listing starting at 0
             Console.WriteLine("The current games are:");
             for (int i = 0; i < infoDict.Count; i++)
             {
@@ -103,6 +107,7 @@ namespace Fundamentals
             {
                 foreach(var mapName in info.MapNames)
                 {
+                    // add mapname to list if it contains z
                     if(mapName.Contains("z"))
                     {
                         mapsWithZ.Add(mapName);
